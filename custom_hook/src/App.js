@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 function App() {
 
@@ -23,26 +23,31 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Today is: {day}<br />
-        {
-          prevDay && (
-            <span>Previous work day was: {prevDay}</span>
-          )
-        }
         </h1>
         <button onClick={getNextDay}>
           Get next day
         </button>
+        <h2>
+          {
+            prevDay && (
+              <span>Previous work day was: {prevDay}</span>
+            )
+          }
+        </h2>
       </header>
     </div>
   );
 }
 
+// Custom useHook
 function usePrevious(val) {
-  const ref = React.useRef(null);
+  const ref = useRef();
 
   useEffect(() => {
-    
-  },[]);
+    ref.current = val;
+  },[val]);
+
+  return ref.current;
 }
 
 export default App;
